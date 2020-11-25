@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width:1rem;
+  height:1rem;
+  border-width:.2em;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.container img {
+  mix-blend-mode: darken;
+}
+.card-footermod {
+  /* position: fixed; */
+  bottom: 0;
+  color: black;
+  mix-blend-mode: darken;
+  background: linear-gradient(
+    to bottom,
+    #EAEDED,
+    #EAEDED 50%,
+    #F8F9F9 50%,
+    #F8F9F9
+  );
+  background-size: 100% 20px;
+  padding: 0.75rem 1.25rem;
+
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+body{
+  /* color: white;
+  background: linear-gradient(
+    to bottom,
+    #F2F3F4,
+    #F2F3F4 10%,
+    #D5DBDB 60%,
+    #D5DBDB
+  );
+  background-size: 100% 3px; */
+  background-image: url('https://cc19lp-cosmos.uta.edu/us.svg') ;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: contain;
+  background-blend-mode: multiply;
+
+}
+
+/* Tooltip container */
+.popup {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;
+  margin-left: -70px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.popup:hover .popuptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Popup container */
+.popupclick {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 1px dotted black;
+}
+
+/* The actual popup (appears on top) */
+.popupclick .popupclicktext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+
+}
+
+/* Popup arrow */
+.popupclick .popupclicktext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popupclick .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+/* h1 {
+  background-color: powderblue;
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+
+div {
+  background-color: powderblue;
+  /* border-top: 2px solid rgba(0, 0, 0, 0.125); */
+}
+
+
+
+.stripe-1 {
+  color: white;
+  background: repeating-linear-gradient(
+    45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
+}
+
+.stripe-5 {
+  background-color: #D1CDFF;
+  background-size: 100% 20px;
+  padding: 10px;
+}
+
+</style>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{{title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cc19lp-cosmos.uta.edu/20200518/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
+    <!--<link href="https://cc19lp-cosmos.uta.edu/20200518/static/css/starter-template.css" rel="stylesheet">-->
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--<script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row" >
+        <div>
+          <img src="https://cc19lp-cosmos.uta.edu/mavericks.jpg" alt="mavericks" width="100" height="100" align="right">
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('index') }}">COSMOS COVID-19 Linear Programming (CC19LP)</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ url_for('main') }}">Home</a></li>
+            <li><a href="{{ url_for('input') }}">Input</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+    <div class="starter-template">
+        <h2>Advice for Schools – Planning during the COVID-19 pandemic</h2>
+          <br>
+          <h2>Purpose</h2>
+          <p> <b>To enable schools to simultaneously achieve the following objectives: </b>
+            <b><ol>
+              <li> Minimize cases of severe illness due to COVID-19. </li>
+              <li> Enable efficient use of protective equipment. </li>
+              <li> Resume in-person activities. </li>
+            </ol></b>
+          </p>
+          <br>
+          <h2>Motivation</h2>
+          <p> <div class="popup"> SARS-CoV-2
+            <span class="popuptext" style="font-size:13px">severe acute respiratory syndrome coronavirus 2</span>
+          </div>, the virus that causes <div class="popup"> COVID-19
+            <span class="popuptext" style="font-size:13px">coronavirus disease 2019</span>
+          </div>, can be spread by infected
+            individuals <div class="popup"> before they have symptoms
+              <span class="popuptext" style="font-size:13px">presymptomatic</span>
+            </div> or <div class="popup"> without any symptoms
+              <span class="popuptext" style="font-size:13px">asymptomatic</span>
+            </div> [<a href="https://wwwnc.cdc.gov/eid/article/26/7/20-1595_article">CDC</a>].
+            <b>There is no cure for COVID-19</b>.  The best defense is to avoid becoming
+            infected, particularly for those that are at higher risk for severe illness.
+          </p>
+          <p>
+          Currently available non-pharmaceutical COVID-19 interventions are:
+          <ol>
+            <li> COVID-19 PCR Tests (Swab tests). </li>
+            <li> Personal Protective Equipment (PPE) at the protection level of <div class="popup"> N95respirator masks
+              <span class="popuptext" style="font-size:13px">N95 masks should be prioritized for healthcare workers in direct contact with COVID-19 patients.</span>
+            </div>, such as <div class="popup"> a washable cloth mask with a reusable face shield
+              cap/visor
+              <span class="popuptext" style="font-size:13px">A cloth mask and a face shield should be used <b>together</b> for higher protection.</span>
+            </div>. </li>
+            <li> <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html">Recognized Social Precautions</a> to prevent the spread of SARS-CoV-2, as follows:
+                  <ul>
+                    <li>social distancing of at least 6 feet, </li>
+                    <li>hand-washing for at least 20 seconds with a non-antibacterial soap, </li>
+                    <li>use of hand sanitizers with at least 60% alcohol content,</li>
+                    <li>use of face coverings, and </li>
+                    <li> <a href="https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fcoronavirus%2F2019-ncov%2Fif-you-are-sick%2Fquarantine-isolation.html">14-day quarantine guidance</a> for infected individuals. </li>
+                  </ul>
+            </li>
+          </ol>
+          U.S. public health decision-makers are relying on three types of policies
+          to control the spread of the virus: <a href="https://en.wikipedia.org/wiki/COVID-19_pandemic_lockdowns">lockdown</a>
+          , <a href="https://www.cdc.gov/coronavirus/2019-ncov/php/contact-tracing/contact-tracing-plan/contact-tracing.html">contact tracing and testing</a>,
+          and total compliance by the U.S. public with <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html">recognized social precautions</a>.
+        </p>
+        <p> <b>Lockdown</b> can successfully minimize infections, which in turn,
+          minimizes cases of severe illness, but does not make efficient use PPE,
+          and does not enable in-person activities to resume.</p>
+          <b>&#8594; Succeeds with <div class="popup"> objective 1
+            <span class="popuptext" style="font-size:13px"> <ol>
+              <li>Minimize cases of severe illness due to COVID-19.</li>
+            </ol> </span>
+          </div>, but fails on <div class="popup"> objectives 2 and 3
+            <span class="popuptext" style="font-size:13px"> <ol>
+              <li>Enable efficient use of personal protective equipment (PPE).</li>
+              <li>Resume in-person activities.</li>
+            </ol> </span>
+          </div>.</b>
+          <br>
+          <br>
+
+          <p> <b>Contact tracing and testing </b> is insufficient in the U.S. to control
+            the spread of virus and does not make use of PPE, but under the paradigm of
+            contact tracing, in-person activities have been permitted to resume.  </p>
+            <b>&#8594; Succeeds with <div class="popup"> objective 3
+              <span class="popuptext" style="font-size:13px"> <ol>
+                <li>Resume in-person activities</li>
+              </ol> </span>
+            </div>, but fails on <div class="popup"> objectives 1 and 2
+              <span class="popuptext" style="font-size:13px"> <ol>
+                <li>Minimize cases of severe illness due to COVID-19.</li>
+                <li>Enable efficient use of personal protective equipment (PPE).</li>
+              </ol> </span>
+            </div>.</b>
+            <br>
+            <br>
+
+            <p> <b>Total compliance with precautions</b> has been unsuccessful in the
+              U.S., with many individuals questioning why they should comply.  Further, CDC
+              guidance creates confusion by implying that social distancing is not needed when
+              wearing <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/cloth-face-cover-guidance.html">face coverings</a>, but distancing is still important, and precautions should
+              be used together.  As a consequence, this policy has not controlled the spread of
+              virus and does not make efficient use of PPE, but has partly permitted in-person
+              activities to resume.</p>
+              <b>&#8594; Succeeds partially with <div class="popup"> objective 3
+                <span class="popuptext" style="font-size:13px"> <ol>
+                  <li>Resume in-person activities</li>
+                </ol> </span>
+              </div>, but fails on <div class="popup"> objectives 1 and 2
+                <span class="popuptext" style="font-size:13px"> <ol>
+                  <li>Minimize cases of severe illness due to COVID-19.</li>
+                  <li>Enable efficient use of personal protective equipment (PPE).</li>
+                </ol> </span>
+              </div>.</b>
+              <br>
+              <br>
+            <div class="stripe-5">
+              <h2>Recommended Approach</h2>
+              <p>Utilize the questionnaire below to identify staff and patrons that
+                are <a href="https://www.medrxiv.org/content/10.1101/2020.07.16.20152033v1">COVID-19 key contact individuals</a>.  This questionnaire is most
+                appropriately completed together by a household in order to account for
+                family interactions.  No data are collected by this online questionnaire.
+              </p>
+
+              <h2 align="center"> <a href="https://docs.google.com/forms/d/e/1FAIpQLSf8iwrQoccZFyEAe2HxO_TuitatFV6jDKX13ivoVDGEnYqPdw/viewform?usp=sf_link" target="_blank">Click Here for Questionnaire: What is my Group?</a></h2>
+
+              <p>Individuals should follow the guidance provided by the questionnaire:
+                <ul>
+                  <li> <b>COVID-19 key contact individuals</b>  should comply with <div class="popup"> social distancing
+                    <span class="popuptext" style="font-size:13px">6 feet</span></div> and <div class="popup"> personal hygiene
+                      <span class="popuptext" style="font-size:13px">Handwashing and use of hand sanitizer</span></div> and should be provided a <b>higher
+                    level of protection</b> in the event of <div class="popup">close contacts<span class="popuptext" style="font-size:13px">Within 6 feet</span></div>, such as installation of Plexiglas barriers and
+                    the personal use of a washable cloth mask <i>with</i> a reusable face shield
+                    cap/visor.</li>
+                    <li> <b> Baseline low-risk individuals</b> should seek to comply with social precautions and facilitate the higher protection 
+                    of key contact individuals, but do not themselves require a higher level of protection. </li>
+                    <li> <b> Sheltered high-risk individuals</b> should not be present at any in-person activities.</li>
+                </ul>
+              </p>
+              <p><b>Discrimination against COVID-19 key contact individuals is a social injustice.</b></p>
+
+              <b>Higher protection levels</b> are provided to COVID-19 key contact individuals, regardless of the compliance level with <div class="popup"> social precautions<span class="popuptext" style="font-size:13px">Social distancing of at least 6 feet, hand-washing or hand sanitizer, face coverings</span></div> by baseline low-risk individuals.
+                 <br><b>&#8594; Succeeds with <div class="popup"> objective 1
+                        <span class="popuptext" style="font-size:13px"> <ol>
+                                                    <li>Minimize cases of severe illness due to COVID-19.</li>
+                                                </ol> </span>
+                                             </div></b>
+                
+              <br>
+              <br>
+                <b>Resources are focused</b> on COVID-19 key contact individuals instead of applied uniformly across all individuals.
+              <br>
+              <b>&#8594; Succeeds with <div class="popup"> objective 2
+              <span class="popuptext" style="font-size:13px"> <ol>
+                <li>Enable efficient use of personal protective equipment (PPE).</li>
+              </ol> </span>
+            </div></b>
+            
+              <br>
+              <br>
+                <b>In-person activities</b> are planned for the protection of COVID-19 key contact individuals.
+              <br>
+              <b>&#8594; Succeeds with <div class="popup"> objective 3
+              <span class="popuptext" style="font-size:13px"> <ol>
+                <li>Resume in-person activities</li>
+              </ol> </span>
+            </div></b>
+            <br>
+            <br>
+            
+              <p>
+                Note: Mild/moderate COVID-19 cases among baseline low-risk
+                individuals are not a high priority concern, but individuals that are
+                confirmed COVID-19 cases should follow guidance on a <a href="https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fcoronavirus%2F2019-ncov%2Fif-you-are-sick%2Fquarantine-isolation.html">14-day quarantine</a>.
+              </p>
+              <br>
+            </div>
+
+              <h2>Planning to Accommodate COVID-19 Key Contact Individuals in Schools</h2>
+              <br>
+              <h4>If your school would like to consult with an analytics expert on
+                planning, consider seeking free assistance from
+                <a href="https://connect.informs.org/probonoanalytics/home">INFORMS Pro Bono Analytics</a>.</h4>
+              <br>
+              <h4>Cleaning and Personal Hygiene</h4>
+              <ol style="list-style-type:lower-roman">
+                <li>Ensure that building ventilations systems are working properly.</li>
+                <li>Conduct cleanings per <a href="https://www.cdc.gov/coronavirus/2019-ncov/community/disinfecting-building-facility.html">CDC guidelines</a>, particularly in areas
+                  occupied by COVID-19 key contact individuals.</li>
+                <li>Conduct frequent cleaning of bathroom stalls and sinks.</li>
+                <li>Ensure sufficient supply of hand soap and paper towels for handwashing.</li>
+                <li>Provide availability of hand sanitizer with at least 60% alcohol.</li>
+                <li>Additional precautions can be considered, such as temperature checks and training students to cough/sneeze into their elbow. </li>
+              </ol>
+
+              <h4>Higher Protection for Teachers/Staff</h4>
+              <ol style="list-style-type:lower-roman">
+                <li>Install Plexiglas barriers around the desks of COVID-19 key contact
+                  individuals.  This will enable the teacher to speak without wearing a
+                  mask, as long as they are behind the barrier.</li>
+                <li>Provide a reusable face shield cap/visor to be worn <i>with</i> a
+                  cloth mask by COVID-19 key contact individuals when closely interacting
+                  with students and others.</li>
+                <li>Otherwise, maintain social distancing of 6 feet around COVID-19 key contact individuals.</li>
+              </ol>
+
+              <h4>Higher Protection for Students in the Classroom</h4>
+             
+              It is anticipated that very few K-12 students will be identified as
+                COVID-19 key contact individuals, but special planning should be accommodated for
+                those that are.  Special planning is not necessary for students in the
+                baseline low-risk group, but schools can choose to apply precautions more
+                broadly.  The following are different options, for which
+                only one need be implemented, but combinations could be considered.
+                <br>
+                <br>
+                <u>Option 1:</u> Install Plexiglas barriers around student desks that will be occupied by COVID-19 key contact individuals.  A desk protected in this manner does not need require distancing of 6 feet from other desks.
+                <br>
+                <br>
+                <u>Option 2:</u> Plan for COVID-19 key contact individuals to sit at desks along the side walls or back walls.  Separate each key contact individual’s desk by a distance of 6 feet from all other desks, including desks occupied by other key contact individuals.
+                <br>
+                <br>
+                <u>Option 3:</u> Designate entire classrooms to be occupied by students that are COVID-19 key contact individuals.  Separate each desk in designated classrooms by a distance of 6 feet from all other desks.  This option only makes sense if the school has many students that have been identified as COVID-19 key contact individuals.  COVID-19 key contact individuals should only have classes in these designated classrooms.
+              <br>
+              <br>
+              
+
+              <h4>Considerations During Transitions</h4>
+              <ol style="list-style-type:lower-roman">
+                <li>i.	Individuals that pass in <div class="popup">transitional zones <span class="popuptext" style="font-size:13px">Hallways, stairwells, passageways</span>
+                </div> are not considered a risk for transmission of the virus.  Plan classroom transitions to avoid prolonged periods of time with individuals occupying a transitional zone.</li>
+                <li>Encourage use of hand sanitizer or handwashing during transitions.</li>
+                <li>COVID-19 key contact individuals that must use an elevator should ride alone.</li>
+                <li>Students that are COVID-19 key contact individuals should transition to their next classroom before other students, so that they are the first to enter an empty classroom with a clean desk.</li>
+                <li>Provide a reusable face shield cap/visor to be worn <i>with</i> a cloth mask by COVID-19 key contact individuals during transitions.</li>
+                <li>Otherwise, maintain social distancing of 6 feet around COVID-19 key contact individuals.</li>
+              </ol>
+
+              <h4>Activities Involving Physical Exertion</h4>
+              <p>Physical exertion requires a higher rate of breathing, which increases the risk of viral transmission.  Example activities include athletics, dance, and taekwondo.</p>
+              <ol style="list-style-type:lower-roman">
+                <li>It is not recommended that COVID-19 key contact individuals participate in physical activities that cannot maintain social distancing of at least 6 feet, regardless of being indoors or outdoors.  </li>
+                <li>If activities involve touching shared surfaces, such as sports balls, then all individuals should use hand sanitizer between touches, and touched items should be traded out or cleaned between rounds.  Alternately, individuals can wear athletic gloves.</li>
+                <li>COVID-19 key contact individuals can cautiously participate in indoor physical activities that maintain social distancing of at least 6 feet.  Additional protection, such as wearing face shields, is still recommended.</li>
+                <li>COVID-19 key contact individuals can participate in outdoor physical activities for which they can maintain social distancing of 6 feet.  As long as this distancing is maintained, the individual does not need to wear personal protection, such as a cloth mask.  Example activities include running, biking, swimming, tennis.</li>
+                <li>Some outdoor physical activities may require occasional close contact.  If such contacts are short and do not involve a face-to-face interaction, then they are not a concern.  An example is a baseman tagging a runner out in baseball.</li>
+                <li>If a COVID-19 key contact individual must conduct a prolonged interaction with others as part of outdoor physical activities, then the key contact individual should wear a face shield cap/visor for these interactions.  An example is a coach that is a key contact individual huddling with team members that are baseline low-risk individuals.</li>
+              </ol>
+
+              <h4>Indoor Activities Not Involving Physical Exertion</h4>
+              <ol style="list-style-type:lower-roman">
+                  <li>Music: Instruments that are not blown, such as stringed instruments, are less risky.    It is recommended that COVID-19 key contact individuals be located at least 6 feet from other musicians and behind musicians playing blown instruments. The use of filters on blown instruments is also recommended.</li>
+                  <li>Choir: Singing involves a higher rate of breathing and projection of one’s voice, which increases the risk of viral transmission.  It is recommended that COVID-19 key contact individuals be located at least 6 feet behind other singers.</li>
+                  <li>Drama: Acting involves the projection of one’s voice, which increases the risk of viral transmission.  It is recommended that COVID-19 key contact individuals maintain social distancing of 6 feet with other actors and avoid roles in which other actors speak in their direction.</li>
+                  <li>If activities involve touching shared surfaces, then all individuals should use hand sanitizer between touches, and touched items should be traded out or cleaned between rounds.</li>
+              </ol>
+
+              <h4>Visitors</h4>
+              <ol style="list-style-type:lower-roman">
+                <li>Visitors that are COVID-19 key contact individuals should wear a face shield cap/visor with a cloth mask when inside school buildings.</li>
+                <li>Whenever possible, visitors that are COVID-19 key contact individuals should maintain social distancing of 6 feet.</li>
+                <li>If touching shared surfaces, then individuals should use hand sanitizer between touches.</li>
+              </ol>
+              <br>
+
+              <p>Homepage: <a href="https://cosmos.uta.edu/projects/covid-19/">COSMOS COVID-19 project site</a></p>
+
+
+            <br>
+          <!--<a href="{{ url_for('main') }}"><button type="button" class="btn btn-primary">Continue</button></a>-->
+      </div>
+      <br>
+    
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+
+  </div> <!-- /.container-->
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width:1rem;
+  height:1rem;
+  border-width:.2em;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.container img {
+  mix-blend-mode: darken;
+}
+.card-footermod {
+  /* position: fixed; */
+  bottom: 0;
+  color: black;
+  mix-blend-mode: darken;
+  background: linear-gradient(
+    to bottom,
+    #EAEDED,
+    #EAEDED 50%,
+    #F8F9F9 50%,
+    #F8F9F9
+  );
+  background-size: 100% 20px;
+  padding: 0.75rem 1.25rem;
+
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+body{
+  /* color: white;
+  background: linear-gradient(
+    to bottom,
+    #F2F3F4,
+    #F2F3F4 10%,
+    #D5DBDB 60%,
+    #D5DBDB
+  );
+  background-size: 100% 3px; */
+  background-image: url('https://cc19lp-cosmos.uta.edu/us.svg') ;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: contain;
+  background-blend-mode: multiply;
+
+}
+
+/* Tooltip container */
+.popup {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;
+  margin-left: -70px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.popup:hover .popuptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Popup container */
+.popupclick {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 1px dotted black;
+}
+
+/* The actual popup (appears on top) */
+.popupclick .popupclicktext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popupclick .popupclicktext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popupclick .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+/* h1 {
+  background-color: powderblue;
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+
+div {
+  background-color: powderblue;
+  /* border-top: 2px solid rgba(0, 0, 0, 0.125); */
+}
+
+
+
+.stripe-1 {
+  color: white;
+  background: repeating-linear-gradient(
+    45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
+}
+
+.stripe-5 {
+  background-color: #D1CDFF;
+  background-size: 100% 20px;
+  padding: 10px;
+}
+
+</style>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{{title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cc19lp-cosmos.uta.edu/20200518/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
+    <!--<link href="https://cc19lp-cosmos.uta.edu/20200518/static/css/starter-template.css" rel="stylesheet">-->
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--<script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row" >
+        <div>
+          <img src="https://cc19lp-cosmos.uta.edu/mavericks.jpg" alt="mavericks" width="100" height="100" align="right">
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('index') }}">COSMOS COVID-19 Linear Programming (CC19LP)</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ url_for('main') }}">Home</a></li>
+            <li><a href="{{ url_for('input') }}">Input</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+
+          <div class="stripe-5">
+            <h2 >COSMOS COVID-19 Linear Programming (CC19LP)</h2>
+            <br>
+            <h2>Intended Users</h2>
+            <p style="text-align: justify">County-level public health officials or decision-makers.</p>
+            <br>
+            <h4>Purpose</h4>
+            <p style="text-align: justify">To optimize planning of non-pharmaceutical COVID-19 interventions:</p>
+            <ul>
+              <li style="text-align: justify">COVID-19 PCR Tests (Swab tests).</li>
+              <li style="text-align: left">Personal Protective Equipment (PPE) at the protection level of
+                <div class="popup"> N95 respirator masks
+                  <span class="popuptext" style="font-size:13px">N95 masks should be prioritized for healthcare workers in direct contact with COVID-19 patients</span>
+                </div> such as a
+                <div class="popup"> washable cloth mask with a reusable face shield cap/visor.
+                  <span class="popuptext" style="font-size:13px">A cloth mask and a face shield should be used <b>together</b> for higher protection.</span>
+                </div> </li>
+              <li style="text-align: justify"><a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html" target="_blank">Recognized Social Precautions </a> to prevent the spread of SARS-CoV-2, as follows:
+                <ul>
+                  <li>social distancing of at least 6 feet,</li>
+                  <li>hand-washing for at least 20 seconds with a non-antibacterial soap,</li>
+                  <li>use of hand sanitizers with at least 60% alcohol content,</li>
+                  <li>use of face coverings, and</li>
+                  <li><a href="https://www.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine-isolation.html" target="_blank" >14-day quarantine guidance</a> for infected individuals.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <br>
+          <h4>Goal</h4>
+          <p style="text-align: justify">To enable a computationally-efficient study of the trade-off between two conflicting objectives: </p>
+          <ul>
+            <li><b>The <a class="popup"> <i>expected daily fatality rate</i> <span class="popuptext" style="font-size:13px">Estimate of the average number of fatalities per day.</span> </a> due to COVID-19.</b></li>
+            <li><b>The <a class="popup"> <i>normalcy of activities on a 0-10 scale</i>
+              <span class="popuptext" style="font-size:13px">Normalcy of 10 represents a return to
+                 pre-pandemic normal without social distancing, etc., and 0 represents
+                 total compliance with social precautions.</span> </a> due to reopening communities.</b></li>
+
+          </ul>
+          <br>
+          <div class="stripe-5">
+            <h4>Approach</h4>
+            <p style="text-align: justify">For a given population, identify three non-overlapping groups of individuals:</p>
+            <ul>
+              <li style="text-align: justify"><b>Group 1: <i>Sheltered high-risk individuals</i> that can <div class="popup">isolate <span class="popuptext" id="link3" style="font-size:13px"> Shelter at home as much as possible </span> </div>  themselves with the assistance of key contact individuals in Group 2.</b></li>
+              <li style="text-align: justify"><b>Group 2: <a class="popup"> <i>COVID-19 key contact individuals</i> <span class="popuptext" style="font-size:13px">Recommended to wear personal protective equipment (PPE) when interacting with others</span> </a> that cannot avoid interaction with the rest of the population in Group 3 and are high-risk themselves or have a role in protecting high-risk individuals in Group 1.</b></li>
+              <li style="text-align: justify"><b>Group 3: <a class="popup"> <i>Baseline low-risk individuals</i><span class="popuptext" style="font-size:13px">Compliance with social precautions is at the individual’s discretion.</span> </a>  that do not belong to Group 2.</b></li>
+            </ul>
+            <h2 align="center"> <a href="https://docs.google.com/forms/d/e/1FAIpQLSf8iwrQoccZFyEAe2HxO_TuitatFV6jDKX13ivoVDGEnYqPdw/viewform?usp=sf_link" target="_blank">Click Here for Questionnaire: What is my Group?</a></h2>
+        <br>
+        <p>The <b>COVID-19 key contact group</b> will include those that
+              <ul>
+                <li style="text-align: justify">work in healthcare, public safety, and other occupations that involve close interaction with both sheltered high-risk individuals and baseline low-risk individuals, and/or</li>
+                <li style="text-align: justify">care for sheltered high-risk individuals in their household.</li>
+              </ul></p>
+              <p>All other high-risk individuals are assumed to be within the <b>sheltered high-risk group</b> and should shelter-in place, shielded by the COVID-19 key contact group.</p>
+              <p>All other low-risk individuals, including most children and young adults, are assumed to be within the <b>baseline low-risk group</b> and can participate in activities at their chosen level of risk.</p>
+            
+          </div>
+            <div class="container">
+                <p style="text-align: justify">In the figure, dotted lines denote protected contacts via shelter-in-place;
+              dashed lines denote contacts requiring usage of <a class="popup">social precautions <span class="popuptext" style="font-size:13px">Social distancing of at least 6 feet, hand-washing or hand sanitizer, face coverings</span> </a>, <a class="popup">PPE <span class="popuptext" style="font-size:13px">Personal protective equipment, such as cloth mask with a face shield.</span> </a>, or <a class="popup">testing <span class="popuptext" style="font-size:13px">COVID-19 PCR testing</span> </a>; and solid lines denote
+              baseline contacts. <a class="popup">CC19LP <span class="popuptext" style="font-size:13px">COSMOS COVID-19 Linear Programming</span> </a> uses <a href="https://www.census.gov/data.html" target="_blank">2018 Census data</a> to estimate the COVID-19 key contact group (Group 2) and then optimizes non-pharmaceutical interventions for the key contact individuals..</p>
+
+              <figure>
+                <img src="https://cc19lp-cosmos.uta.edu/covid_intro_color_baseline.jpg" alt="intro" width="800" height="350" align="center">
+              </figure>
+            </div>
+
+         
+          <div class="stripe-5">
+            <h4>User Input</h4>
+            <p style="text-align: justify">State/County, COVID-19 data, Availability of COVID-19 tests and PPE/N95 masks.</p>
+            <br>
+            <h4><a class="popup">CC19LP <span class="popuptext" style="font-size:13px">COSMOS COVID-19 Linear Programming</span> </a> Output</h4>
+            <ul>
+              <li style="text-align: justify">Estimated <a class="popup"> COVID-19 key contact group.<span class="popuptext" style="font-size:13px">Group 2 in the figure is further partitioned into subgroups based on risk level </span> </a></li>
+              <li style="text-align: justify"> <a class="popup">Expected daily fatality <span class="popuptext" style="font-size:13px">Estimate of the average number of fatalities per day</span> </a> rates at various <a class="popup"> Normalcy levels <span class="popuptext" style="font-size:13px"> Normalcy of 10 represents a return to pre-pandemic normal without social distancing, etc., and 0 represents total compliance with social precautions. </span> </a> for key contact individuals.</li>
+              <li style="text-align: justify">Optimized usage of <a class="popup"> non-pharmaceutical interventions <span class="popuptext" style="font-size:13px"> <ul><li>Recognized Social Precautions</li>
+              <li>COVID-19 PCR Tests (Swab tests)</li>
+              <li>Personal Protective Equipment (PPE) </li>
+              <li>COVID-19 Vaccines</li>
+            </ul> </span></a> for key contact individuals.</li>
+            </ul>
+            <br>
+          </div>
+
+
+          <h4>Steps to Follow</h4>
+          <ul>
+            <li style="text-align: justify">Step 1: Select State and County to study key contact group.  Run Census data pull.</li>
+            <li style="text-align: justify">Step 2: Review estimated COVID-19 key contact group based on Census data.</li>
+            <li style="text-align: justify">Step 3: Enter requested COVID-19 data. Run CC19LP.</li>
+            <li style="text-align: justify">Step 4: Review Expected daily fatality rates at various Normalcy levels. Select Normalcy level.</li>
+            <li style="text-align: justify">Step 5: Review CC19LP results for selected Normalcy level to see breakdown of non-pharmaceutical interventions by key contact type.</li>
+          </ul>
+          <br>
+
+          <a href="{{ url_for('input') }}"><button type="button" class="btn btn-primary">Proceed to Step 1</button></a>
+          <br>
+          <!--<div class="loader"></div>-->
+      </div>
+      <br>
+      <br>
+
+
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="static/js/bootstrap.min.js"></script>
+
+    </div> <!-- /.container-->
+    <footer class='card-footermod ml-6'>
+      <p><font size="3.5"><br>Developed by the Center on Stochastic Modeling, Optimization, & Statistics (COSMOS): </p>
+        <ul>
+          <li style="text-align: justify"><b>UT Arlington Faculty</b>: Victoria Chen, Yuan Zhou, Jay Rosenberger</li>
+          <li style="text-align: justify"><b>Collaborators</b>: Alireza Fallahi, Feng Liu, Nilabh Ohol, Xinglong Ju, Jeffrey Guild, Norman Edelman</li>
+          <li style="text-align: justify"><b>Ph.D. Students</b>: Amith Viswanatha, Jingmei Yang, Yasaman Ghasemi</li>
+        </ul>
+      <p>Contact information: <a href="mailto:vchen@uta.edu">Victoria Chen</a></p>
+      <p style="text-align: justify">More information can be found <a href="https://cosmos.uta.edu/projects/covid-19/"> on our official website</a> <br></p>
+    </footer>
+
+    <script>
+      // When the user clicks on div, open the popup
+      function popupFunction() {
+        var popup = document.getElementById("link1");
+        popup.classList.toggle("show");
+      }
+
+      function popupFunction2() {
+        var popup2 = document.getElementById("link2");
+        popup2.classList.toggle("show");
+      }
+
+      function popupFunction3() {
+        var popup3 = document.getElementById("link3");
+        popup3.classList.toggle("show");
+      }
+
+      function popupFunction4() {
+        var popup4 = document.getElementById("link4");
+        popup4.classList.toggle("show");
+      }
+    </script>
+
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

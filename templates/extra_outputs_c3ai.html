@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.container img {
+  mix-blend-mode: darken;
+}
+.card-footermod {
+  /* position: fixed; */
+  bottom: 0;
+  color: black;
+  mix-blend-mode: darken;
+  background: linear-gradient(
+    to bottom,
+    #EAEDED,
+    #EAEDED 50%,
+    #F8F9F9 50%,
+    #F8F9F9
+  );
+  background-size: 100% 20px;
+  padding: 0.75rem 1.25rem;
+
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+body{
+  /* color: white;
+  background: linear-gradient(
+    to bottom,
+    #F2F3F4,
+    #F2F3F4 10%,
+    #D5DBDB 60%,
+    #D5DBDB
+  );
+  background-size: 100% 3px; */
+  background-image: url('https://cc19lp-cosmos.uta.edu/us.svg') ;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: contain;
+  background-blend-mode: multiply;
+
+}
+
+/* Tooltip container */
+.popup {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;
+  margin-left: -70px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.popup:hover .popuptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Popup container */
+.popupclick {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 1px dotted black;
+}
+
+/* The actual popup (appears on top) */
+.popupclick .popupclicktext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popupclick .popupclicktext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popupclick .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+/* h1 {
+  background-color: powderblue;
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+
+div {
+  background-color: powderblue;
+  /* border-top: 2px solid rgba(0, 0, 0, 0.125); */
+}
+
+
+
+.stripe-1 {
+  color: white;
+  background: repeating-linear-gradient(
+    45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
+}
+
+.stripe-5 {
+  background-color: #D1CDFF;
+  background-size: 100% 20px;
+}
+
+</style>
+<style>
+		table, th, td {
+    	border: 1px solid black;
+      padding: 10px;
+		}
+</style>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{{title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cc19lp-cosmos.uta.edu/20200518/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+    <script src="static/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('main_c3ai') }}">COSMOS COVID-19 Linear Programming (CC19LP)</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ url_for('main_c3ai') }}">Home</a></li>
+            <li><a href="{{ url_for('testing_popatrisk') }}">Input</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+  </div> <!-- /.container-->
+
+      <div class="container">
+        <div class="starter-template">
+          <p><ul>
+            <li style="text-align: justify">Step 1: Select State and County to study key contact group.  Run Census data pull.</li>
+            <li style="text-align: justify">Step 2: Review estimated COVID-19 key contact group based on Census data.</li>
+            <li style="text-align: justify">Step 3: Enter requested COVID-19 data. Run CC19LP.</li>
+            <li style="text-align: justify">Step 4: Review Expected daily fatality rates at various Normalcy levels. Select Normalcy level.</li>
+            <li style="text-align: justify"> <b> Step 5: Review CC19LP results for selected Normalcy level to see breakdown of COVID-19 interventions by key contact type.</b> </li>
+          </ul></p>
+          <h2>Step 5: Review CC19LP results for selected Normalcy level to see breakdown of <a class="popup"> COVID-19 interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+          <li>COVID-19 PCR Tests (Swab tests)</li>
+          <li>Personal Protective Equipment (PPE) </li>
+          <li>COVID-19 Vaccines</li>
+        </ul> </span></a> by key contact type.</h2>
+        <br>
+        <h3>Activity Levels</h3>
+        <h4>School activities for key contact children are categorized as:</h4>
+        <table align="center">
+                      <tr>
+                        <th align="center"> Label </th>
+                        <th> Description of school activity </th>
+                      </tr>
+                      <tr>
+                        <td> School 1 </td>
+                        <td> In-person K-12 school complying with recognized <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html" target="_blank">social precautions</a> </td>
+                      </tr>
+                      <tr>
+                        <td> School 2 </td>
+                        <td> In-person K-12 school with <a class="popup"> near-normal <span class="popuptext">Normal activity levels correspond to pre-pandemic activity without compliance with social precautions.</span></a> activities </td>
+                      </tr>
+          </table>
+          <br>
+          <h4><a class="popup"> Occupation activities <span class="popuptext" style="font-size:11px">Key contact adults participate in an occupation, such as employment or post-secondary school or other activities during work hours.</span></a> for key contact adults are categorized as:</h4>
+          <table align="center">
+                        <tr>
+                          <th align="center"> Label </th>
+                          <th> Description of occupation activity </th>
+                        </tr>
+                        <tr>
+                          <td> Work 0 </td>
+                          <td> Online occupation </td>
+                        </tr>
+                        <tr>
+                          <td> Work 1 </td>
+                          <td> In-person occupation complying with recognized<a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html" target="_blank"> social precautions</a> </td>
+                        </tr>
+                        <tr>
+                          <td> Work 2 </td>
+                          <td> In-person occupation with <a class="popup"> near-normal <span class="popuptext">Normal activity levels correspond to pre-pandemic activity without compliance with social precautions.</span></a> activities </td>
+                        </tr>
+            </table>
+                <br>
+                <h4><a class="popup">Community activities <span class="popuptext" style="font-size:11px">All key contacts may additionally participate in community activities outside of school/occupation.</span></a> for all key contacts are categorized as:</h4>
+                <table align="center">
+                              <tr>
+                                <th align="center"> Label </th>
+                                <th> Description of occupation activity </th>
+                              </tr>
+                              <tr>
+                                <td> Community 0 </td>
+                                <td> Community activities at 0% of normal: Maintain all recognized social precautions </td>
+                              </tr>
+                              <tr>
+                                <td> Community 25 </td>
+                                <td> 25% of community activities without maintaining recognized social precautions </td>
+                              </tr>
+                              <tr>
+                                <td> Community 50 </td>
+                                <td> 50% of community activities without maintaining recognized social precautions </td>
+                              </tr>
+                              <tr>
+                                <td> Community 75 </td>
+                                <td> 75% of community activities without maintaining recognized social precautions </td>
+                              </tr>
+                              <tr>
+                                <td> Community 100 </td>
+                                <td> Community activities at <a class="popup"> 100% of normal<span class="popuptext">Normal activity levels correspond to pre-pandemic activity without compliance with social precautions.</span></a>: Pre-pandemic normal level </td>
+                              </tr>
+                  </table>
+                  <br>
+          <h2>Pie Charts of COVID-19 Key Contacts and <a class="popup">Testing <span class="popuptext" style="font-size:11px">COVID-19 PCR Tests (Swab)</span></a>/<a class="popup">PPE  <span class="popuptext" style="font-size:11px">Personal protective equipment at the level of N95 respirator masks, such as the combined usage of a multi-layer washable cloth mask with a reusable face shield cap/visor.</span></a>/Vaccine Allocations
+            {{county_selected}}, {{state_selected}}</h2>
+            <br>
+            <h4 style="text-align: center"><div class="popup">CC19LP <span class="popuptext" style="font-size:11px"> COSMOS COVID-19 Linear Programming</span></div> Estimated Expected Daily Fatalities = {{obj_val}}</h4>
+            <h4 style="text-align: center">Selcted Normalcy = {{normalcy}}</h4>
+            <h4 style="text-align: center">Target for Expected Daily Fatalities = {{avg_daily_fatalities}}</h4>
+            <h4 style="text-align: center">Supply of Testing Kits = {{COVID_19_testing_kits_available}} </h4>
+            <h4 style="text-align: center">Supply of PPE = {{N95_masks_available}}</h4>
+            <h4 style="text-align: center">Supply of Vaccines = {{COVID_19_vaccines_available}}</h4>
+          <br>
+            <h3>Breakdown of COVID-19 Key Contact Types (from Step 2):</h3>
+            <table align="center">
+      										<tr>
+                            <th align="center"> Color </th>
+       											<th align="center"> Label </th>
+        										<th align="center"> Description of key contact individual </th>
+                            <th align="center"> Count </th>
+      										</tr>
+      										<tr>
+                            <td style="background-color:#008B45">  </td>
+        										<td> K-12 </td>
+        										<td> Low-risk children aged 5-17 that closely interact with sheltered high-risk individuals </td>
+                            <td align="right"> {{key_contacts_5_17_L1}} </td>
+      										</tr>
+      										<tr>
+                            <td style="background-color:#39B7CD">  </td>
+        										<td> L1 </td>
+        										<td> Low-risk adults aged 18+ that closely interact with sheltered high-risk individuals </td>
+                            <td align="right"> {{key_contacts_18_64_L1}} </td>
+      										</tr>
+      										<tr>
+                            <td style="background-color:#FFE303">  </td>
+        										<td> H1 </td>
+        										<td> High-risk adults aged 18+ that cannot avoid close interaction with baseline low-risk individuals and can maintain recognized social precautions </td>
+                            <td align="right"> {{key_contacts_H1}} </td>
+      										</tr>
+                          <tr>
+                            <td style="background-color:#E3170D">  </td>
+        										<td> H2 </td>
+        										<td> High-risk adults aged 18+ living in crowding that precludes the ability to maintain recognized social precautions </td>
+                            <td align="right"> {{key_contacts_H2}} </td>
+      										</tr>
+                          <tr>
+
+        										<td align="center" colspan="3"> <b> Total number of COVID-19 key contact individuals </td>
+                            <td> <b>{{sum_key_contact}}</b> </td>
+      										</tr>
+    			    </table>
+              <br>
+
+        </div>
+        <!--<h4>Optimal Allocation of <a class="popup">Testing <span class="popuptext" style="font-size:11px">COVID-19 PCR Tests (Swab)</span></a> to Key Contact Types</h4>-->
+        <!--<p>{{COVID_19_testing_kits_available}} testing kits per day</p>-->
+        <!--<br>-->
+        <!--<h4>Optimal Allocation of <a class="popup">PPE  <span class="popuptext" style="font-size:11px">Personal protective equipment at the level of N95 respirator masks, such as the combined usage of a washable cloth mask with a reusable face shield cap/visor.</span></a> to Key Contact Types</h4>-->
+        <!--<p>{{N95_masks_available}} testing kits per day</p>-->
+        <!--<br>-->
+
+
+        {% block body %}
+        <link href="http://cdn.pydata.org/bokeh/release/bokeh-{{ bkversion }}.min.css" rel="stylesheet" type="text/css">
+        <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-{{ bkversion }}.min.css" rel="stylesheet" type="text/css">
+
+        <script src="http://cdn.pydata.org/bokeh/release/bokeh-{{ bkversion }}.min.js"></script>
+        <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-{{ bkversion }}.min.js"></script>
+
+        {{ fig_3_div|indent(4)|safe }}
+        {% endblock %}
+        <br>
+        
+        <h2>Pie Charts of <a class="popup">Interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+        <li>COVID-19 PCR Tests (Swab tests)</li>
+        <li>Personal Protective Equipment (PPE) </li>
+        <li>COVID-19 Vaccines</li>
+        </ul> </span></a> for Each COVID-19 Key Contact Type
+          {{county_selected}}, {{state_selected}}</h2>
+
+        <div>
+          <br>
+          <h4>Optimal <a class="popup">Interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+          <li>COVID-19 PCR Tests (Swab tests)</li>
+          <li>Personal Protective Equipment (PPE) </li>
+          <li>COVID-19 Vaccines</li>
+        </ul> </span></a> for <a class="popup"> K-12 Key Contact Individuals <span class="popuptext" style="font-size:11px">{{key_contacts_5_17_L1}} key contact children, aged 5-17</span></a></h4>
+          <br>
+          {{ fig_4_div|indent(4)|safe }}
+          <p>Activity levels are displayed clockwise from lowest risk to highest risk.</p>
+
+          <br>
+          <h4>Optimal <a class="popup">Interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+          <li>COVID-19 PCR Tests (Swab tests)</li>
+          <li>Personal Protective Equipment (PPE) </li>
+          <li>COVID-19 Vaccines</li>
+        </ul> </span></a> for <a class="popup"> L1 Key Contact Individuals <span class="popuptext" style="font-size:11px">{{key_contacts_18_64_L1}} low-risk adult key contacts, aged 18-64</span></a></h4>
+          <br>
+          {{ fig_5_div|indent(4)|safe }}
+          <p>Activity levels are displayed clockwise from lowest risk to highest risk.</p>
+
+          <br>
+          <h4>Optimal <a class="popup">Interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+          <li>COVID-19 PCR Tests (Swab tests)</li>
+          <li>Personal Protective Equipment (PPE) </li>
+          <li>COVID-19 Vaccines</li>
+        </ul> </span></a> for <a class="popup"> H1 Key Contact Individuals <span class="popuptext" style="font-size:11px">{{key_contacts_H1}} high-risk adult key contacts, aged 18+, that do not living in a crowding environment and can comply with recognized social precautions.</span></a></h4>
+          <br>
+          {{ fig_6_div|indent(4)|safe }}
+          <p>Activity levels are displayed clockwise from lowest risk to highest risk.</p>
+
+          <br>
+          <h4>Optimal <a class="popup">Interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+          <li>COVID-19 PCR Tests (Swab tests)</li>
+          <li>Personal Protective Equipment (PPE) </li>
+          <li>COVID-19 Vaccines</li>
+        </ul> </span></a> for <a class="popup"> H2 Key Contact Individuals <span class="popuptext" style="font-size:11px">{{key_contacts_H2}} high-risk adult key contacts, aged 18+, that are living in a crowding environment that precludes the ability to comply with recognized social precautions.</span></a></h4>
+          <br>
+          {{ fig_7_div|indent(4)|safe }}
+          <p>Activity levels are displayed clockwise from lowest risk to highest risk.</p>
+
+
+          <br>
+          <h2>Summary Pie Chart of <a class="popup">Interventions <span class="popuptext" style="font-size:11px"> <ul><li>Recognized Social Precautions</li>
+          <li>COVID-19 PCR Tests (Swab tests)</li>
+          <li>Personal Protective Equipment (PPE) </li>
+          <li>COVID-19 Vaccines</li>
+        </ul> </span></a> by COVID-19 Key Contact Type
+            {{county_selected}}, {{state_selected}}</h2>
+
+            <table align="center">
+                          <tr>
+                            <th align="center"> <b># Key Contacts	</b> </th>
+                            <th align="center"> <b># Tests per day	</b> </th>
+                            <th align="center"> <b># PPE per day	</b> </th>
+                            <th align="center"> <b># Vaccines per day	</b> </th>
+                            <th align="center"> <b>Normalcy	</b> </th>
+                            <th align="center"> <b>Daily Fatalities	</b> </th>
+                          </tr>
+                          <tr>
+                            <td align="center"> <b>{{sum_key_contact}}</b> </td>
+                            <td align="center"> <b>{{COVID_19_testing_kits_available}}</b> </td>
+                            <td align="center"> <b>{{N95_masks_available}}</b> </td>
+                            <td align="center"> <b>{{COVID_19_vaccines_available}}</b> </td>
+                            <td align="center"> <b>{{normalcy}}</b> </td>
+                            <td align="center"> <b>{{avg_daily_fatalities}}</b> </td>
+                          </tr>
+              </table>
+
+            <br>
+            <table align="center">
+      										<tr>
+                            <th align="center"> Color </th>
+       											<th align="center"> Label </th>
+        										<th align="center"> Description of key contact individual </th>
+                            <th align="center"> Count </th>
+      										</tr>
+      										<tr>
+                            <td style="background-color:#008B45">  </td>
+        										<td> K-12 </td>
+        										<td> Low-risk children aged 5-17 that closely interact with sheltered high-risk individuals </td>
+                            <td align="right"> {{key_contacts_5_17_L1}} </td>
+      										</tr>
+      										<tr>
+                            <td style="background-color:#39B7CD">  </td>
+        										<td> L1 </td>
+        										<td> Low-risk adults aged 18+ that closely interact with sheltered high-risk individuals </td>
+                            <td align="right"> {{key_contacts_18_64_L1}} </td>
+      										</tr>
+      										<tr>
+                            <td style="background-color:#FFE303">  </td>
+        										<td> H1 </td>
+        										<td> High-risk adults aged 18+ that cannot avoid close interaction with baseline low-risk individuals and can maintain recognized social precautions </td>
+                            <td align="right"> {{key_contacts_H1}} </td>
+      										</tr>
+                          <tr>
+                            <td style="background-color:#E3170D">  </td>
+        										<td> H2 </td>
+        										<td> High-risk adults aged 18+ living in crowding that precludes the ability to maintain recognized social precautions </td>
+                            <td align="right"> {{key_contacts_H2}} </td>
+      										</tr>
+                          <tr>
+
+        										<td align="center" colspan="3"> <b> Total number of COVID-19 key contact individuals </td>
+                            <td> <b>{{sum_key_contact}}</b> </td>
+      										</tr>
+    			    </table>
+            {{ fig_8_div|indent(4)|safe }}
+            <br>
+
+        <p>This final pie chart is a summary that simultaneously displays the allocation of activity levels, COVID-19 tests, PPE and COVID-19 vaccines to key contact types.  The types of individuals are again displayed clockwise from lowest to highest risk, and the combined activity levels within each category are displayed clockwise from lowest risk to highest risk.  Pulled out slices emphasize the use of testing, PPE, and vaccines.
+        </p>
+
+        </div>
+
+
+
+     </div><!-- /.container -->
+
+    <div class="container">
+      <br>
+      <br>
+      <div>
+        <a href="javascript:history.back()" ><button type="button" class="btn btn-primary">Back</button> </a>
+        <a href="{{ url_for('testing_popatrisk') }}"><button type="button" class="btn btn-primary">Restart at Step 1</button></a>
+      </div>
+      <br>
+      <br>
+
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="static/js/bootstrap.min.js"></script>
+     </div><!-- /.container -->
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+
+</html>

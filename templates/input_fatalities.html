@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width:5px;
+  height:5px;
+  border-width:.2em;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.container img {
+  mix-blend-mode: darken;
+}
+.card-footermod {
+  /* position: fixed; */
+  bottom: 0;
+  color: black;
+  mix-blend-mode: darken;
+  background: linear-gradient(
+    to bottom,
+    #EAEDED,
+    #EAEDED 50%,
+    #F8F9F9 50%,
+    #F8F9F9
+  );
+  background-size: 100% 20px;
+  padding: 0.75rem 1.25rem;
+
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+body{
+  /* color: white;
+  background: linear-gradient(
+    to bottom,
+    #F2F3F4,
+    #F2F3F4 10%,
+    #D5DBDB 60%,
+    #D5DBDB
+  );
+  background-size: 100% 3px; */
+  background-image: url('https://cc19lp-cosmos.uta.edu/us.svg') ;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: contain;
+  background-blend-mode: multiply;
+
+}
+
+/* Tooltip container */
+.popup {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 0%;
+  margin-left: -70px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.popup:hover .popuptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Popup container */
+.popupclick {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 1px dotted black;
+}
+
+/* The actual popup (appears on top) */
+.popupclick .popupclicktext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popupclick .popupclicktext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popupclick .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+/* h1 {
+  background-color: powderblue;
+  border-top: 2px solid rgba(0, 0, 0, 0.125);
+}
+
+div {
+  background-color: powderblue;
+  /* border-top: 2px solid rgba(0, 0, 0, 0.125); */
+}
+
+
+
+.stripe-1 {
+  color: white;
+  background: repeating-linear-gradient(
+    45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
+}
+
+.stripe-5 {
+  background-color: #D1CDFF;
+  background-size: 100% 20px;
+}
+
+</style>
+<style>
+		table, th, td {
+    	border: 1px solid black;
+      padding: 10px;
+		}
+</style>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>{{title}}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cc19lp-cosmos.uta.edu/20200518/static/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="starter-template.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  <script src="https://cc19lp-cosmos.uta.edu/20200518/static/js/bootstrap.js"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('main') }}">COSMOS COVID-19 Linear Programming (CC19LP)</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ url_for('main') }}">Main</a></li>
+            <!--<li><a href="{{ url_for('index') }}">Index</a></li>-->
+            <li><a href="{{ url_for('input') }}">Input</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+  <div class="container">
+
+      <div class="starter-template">
+        <p><ul>
+          <li style="text-align: justify">Step 1: Select State and County to study key contact group.  Run Census data pull.</li>
+          <li style="text-align: justify">Step 2: Review estimated COVID-19 key contact group based on Census data.</li>
+          <li style="text-align: justify"> <b>Step 3: Enter requested COVID-19 data. Run CC19LP.</b></li>
+          <li style="text-align: justify">Step 4: Review Expected daily fatality rates at various Normalcy levels. Select Normalcy level.</li>
+          <li style="text-align: justify">Step 5: Review CC19LP results for selected Normalcy level to see breakdown of non-pharmaceutical interventions by key contact type.</li>
+        </ul></p>
+        <h2>Step 3: Enter requested COVID-19 data. Run <div class="popup">CC19LP<span class="popuptext" style="font-size:13px">COSMOS COVID-19 Linear Programming</span></div>.</h2>
+        Four CC19LP input parameters are calculated from the entered data:
+        <ul>
+          <li style="text-align: justify">The <div class="popup"> lowest average daily fatality rate <span class="popuptext" style="font-size:13px">The target is to maintain this lowest rate while reopening communities.</span></div> achieved in {{county_selected}}, {{state_selected}} following any mandated lockdowns.</li>
+          <li style="text-align: justify">The <div class="popup"> number of reported COVID-19 cases <span class="popuptext" style="font-size:13px">It is assumed that 85% of these cases quarantine, leaving 15% of these continuing to spread the virus.  It is also assumed that for each known reported case, there are unknown COVID-19 cases that do not quarantine and continue to spread the virus.</span></div> in {{county_selected}}, {{state_selected}} over the most recent 3 weeks.</li>
+          <li style="text-align: justify">The possible supply of <div class="popup"> COVID-19 PCR testing kits <span class="popuptext" style="font-size:13px">It is assumed that COVID-19 Testing has a 30% false negative rate.</span></div> per day.</li>
+          <li style="text-align: justify">The possible supply of <div class="popup"> PPE <span class="popuptext" style="font-size:13px">It is assumed that PPE is at the level of N95 respirator masks.  One sustainable option is combined usage of a washable cloth mask with a reusable face shield cap/visor.</span></div> available per day.</li>
+        </ul>
+        <p>Daily COVID-19 data may be found on public health websites for individual U.S. states or from the <a href="https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/" target="_blank">USA Facts website</a>.</p>
+      </div>
+
+      <div class = "container">
+           <h4>Input COVID-19 Fatalities</h4>
+        <form  action="/20200518/input/results/?arg1=output&county_selected={{county_selected}}&state_selected={{state_selected}}&population={{population}}&key_contacts_5_17_L1={{key_contacts_5_17_L1}}&key_contacts_18_64_L1={{key_contacts_18_64_L1}}&key_contacts_H1={{key_contacts_H1}}&key_contacts_H2={{key_contacts_H2}}" method="POST" onsubmit="return spinner_function()">
+          <div class="starter-template">
+                <p>Select a time period following any mandated lockdowns in which {{county_selected}}, {{state_selected}} achieved the lowest average daily rate of COVID-19 fatalities:</p>
+          </div>
+          <div class="form-group col-3">
+            {{ form.num_days.label(class="form-control-label") }}
+            {% if form.num_days.errors %}
+              {{ form.num_days(class="form-control form-control is-invalid", function="daily_fatalities()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    Select a value
+                </small>
+              </div>
+              <div class="invalid-feedback">
+                {% for error in form.num_days.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.num_days(class="form-control form-control", oninput="daily_fatalities()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    Select a value
+                </small>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="form-group col-3">
+            {{ form.num_fatalities_7.label(class="form-control-label") }}
+            {% if form.num_fatalities_7.errors %}
+              {{ form.num_fatalities_7(class="form-control form-control is-invalid", function="daily_fatalities()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    e.g. 10
+                </small>
+              </div>
+              <div class="invalid-feedback">
+                {% for error in form.num_fatalities_7.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.num_fatalities_7(class="form-control form-control", oninput="daily_fatalities()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    e.g. 10
+                </small>
+              </div>
+            {% endif %}
+          </div>
+
+          <div>
+            The lowest average daily fatality rate for  {{county_selected}}, {{state_selected}}: <b> <a id = "daily_fat" onopen="daily_fatalities()">{{avg_daily_fatalities}}</a> </b> per day.
+            <!-- This represents the fatality rate achieved as a consequence of widespread lockdown.
+            When viewing CC19LP solutions, the target should be  <b> <a id = "daily_fat2">{{num_fatalities_daily}}</a> </b> expected fatalities per day. -->
+          </div>
+          <br>
+          <h4>Input COVID-19 Reported Cases</h4>
+
+
+          <div class="form-group col-3">
+            {{ form.num_cases_3_weeks.label(class="form-control-label") }}
+            {% if form.num_cases_3_weeks.errors %}
+              {{ form.num_cases_3_weeks(class="form-control form-control is-invalid", oninput="fraction_contagious()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    # of confirmed COVID-19 cases in the 3 weeks prior today
+                </small>
+              </div>
+              <div class="invalid-feedback">
+                {% for error in form.num_cases_3_weeks.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.num_cases_3_weeks(class="form-control form-control", oninput="fraction_contagious()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    # of confirmed COVID-19 cases in the 3 weeks prior today
+                </small>
+              </div>
+            {% endif %}
+          </div>
+          <br>
+          <div>
+            Based on reported known COVID-19 cases in the prior 3 weeks, the table below shows the estimated number of individuals and the corresponding percentage of the total population that is contagious and not quarantining today in {{county_selected}}, {{state_selected}}. <br>
+          <br>
+          <table align="center">
+                          <tr>
+                            <th>  </th>
+                            <th colspan="5" align="center"> <div class="popup"><b>Ratio of Unknown to Known Cases</b> <span class="popuptext" style="font-size:13px">A ratio of 4:1 means it is assumed there are 4 unknown COVID-19 cases for each known COVID-19 case</span></div></th>
+                          </tr>
+      										<tr>
+       											<th>  </th>
+        										<th> 5:1 </th>
+                            <th> 4:1 </th>
+                            <th> 3:1 </th>
+                            <th> 2:1 </th>
+                            <th> 1:1 </th>
+      										</tr>
+                          <tr>
+       											<th> Number contagious </th>
+        										<th id="number5"> {{number_contagious_day_5}}</th>
+                            <th id="number4" style="background-color:cyan"> {{number_contagious_day_4}} </th>
+                            <th id="number3"> {{number_contagious_day_3}} </th>
+                            <th id="number2"> {{number_contagious_day_2}} </th>
+                            <th id="number1"> {{number_contagious_day_1}} </th>
+      										</tr>
+                          <tr>
+       											<th> Percent contagious </th>
+        										<th id="fraction5"> {{fraction_contagious_day_5}}</th>
+                            <th id="fraction4" style="background-color:cyan"> {{fraction_contagious_day_4}} </th>
+                            <th id="fraction3"> {{fraction_contagious_day_3}} </th>
+                            <th id="fraction2"> {{fraction_contagious_day_2}} </th>
+                            <th id="fraction1"> {{fraction_contagious_day_1}} </th>
+      										</tr>
+    			    </table>
+              <br>
+              Under the 4:1 ratio, we assume there are 4 unknown cases for each known case.
+              Then it is estimated that there are currently <b><a id="number4_1"> {{number_contagious_day_4}} </a></b> contagious individuals spreading the virus, which constitutes <b><a id="fraction4_1"> {{fraction_contagious_day_4}} </a></b> of the <b>{{population_str}}</b> individuals in {{county_selected}}, {{state_selected}}.
+          </div>
+
+          <br>
+          <h4>Input Supply of Testing Kits</h4>
+
+          <div class="form-group col-3">
+            {{ form.num_kits.label(class="form-control-label",onchange="testing_kits()") }}
+            {% if form.num_kits.errors %}
+              {{ form.num_kits(class="form-control form-control is-invalid") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    Select a value
+                </small>
+              </div>
+              <div class="invalid-feedback">
+                {% for error in form.num_kits.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.num_kits(class="form-control form-control",onchange="testing_kits()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    Select a value
+                </small>
+              </div>
+            {% endif %}
+          </div>
+          <div>
+            With <b><a id='num_kits2'> </a> </b>testing kits per thousand population per day, CC19LP will use a capacity of <b><a id='testing_kits'> </a></b> testing kits per day for key contacts in {{county_selected}}, {{state_selected}}.
+          </div>
+
+          <br>
+          <h4>Input Supply of <div class="popup"> PPE <span class="popuptext"  style="font-size:13px">Personal protective equipment at the level of N95 respirator masks, such as the combined usage of a washable cloth mask with a reusable face shield cap/visor.</span></div></h4>
+
+          <div class="form-group col-3">
+            {{ form.num_masks.label(class="form-control-label") }}
+            {% if form.num_masks.errors %}
+              {{ form.num_masks(class="form-control form-control is-invalid",onchange="masks()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    Select a value
+                </small>
+              </div>
+              <div class="invalid-feedback">
+                {% for error in form.num_masks.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.num_masks(class="form-control form-control",onchange="masks()") }}
+              <div class="border-top pt-1">
+                <small class="text-muted">
+                    Select a value
+                </small>
+              </div>
+            {% endif %}
+          </div>
+          <br>
+          <div>
+            With <b><a id='num_masks2' onload="masks()">{{num_masks2}} </a> </b> people protected by PPE per thousand population per day, CC19LP will use a limit of <b><a id='masks_available'> </a> </b>
+              key contacts that can be protected per day for {{county_selected}}, {{state_selected}}.
+          </div>
+          <br>
+          <h4>User Target</h4>
+          If a CC19LP solution can achieve an expected number of
+            <b> <a id = "daily_fat2">{{daily_fatalities}}</a> </b> fatalities per day, then reopening is estimated to be achievable
+              with the optimized <div class="popup"> non-pharmaceutical interventions <span class="popuptext" style="font-size:13px"> <ul><li>COVID-19 PCR Tests (Swab tests)</li>
+              <li>Personal Protective Equipment (PPE) </li>
+              <li>Recognized Social Precautions</li>
+            </ul> </span></div> by key contact
+              type without increasing the average daily fatality rate.
+              If a CC19LP solution cannot achieve an expected number of <b> <a id = "daily_fat3">{{daily_fatalities}}</a> </b>
+                fatalities per day, then an increased supply of PPE or Testing is
+                needed.
+
+          <br>
+          <br>
+          <div>
+            <a href="javascript:history.back()" ><button type="button" class="btn btn-primary">Back</button> </a>
+            <button type="submit" id="btnFetch" class="btn btn-primary">Submit and Proceed to Step 4</button>
+            <script type="text/javascript">
+                  function spinner_function(){
+                    btnFetch.innerHTML = "Running CC19LP..."+`<span class="spinner-border spinner-border-sm" role="status" id='spinner' aria-hidden="true"></span>`;
+                    // spinner.classList.remove("d-none");
+                    // btnFetch.innerHTML = "Loading...";
+                    // alert("Submit button clicked!");
+                    return true;
+
+                  }
+                // spinner_function()
+            </script>
+            <br>
+            <br>
+          </div>
+        </form>
+
+
+      </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cc19lp-cosmos.uta.edu/20200518/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        let fatalites = document.getElementById('num_fatalities_7');
+        let daily_fatalities_1 = document.getElementById('num_fatalities_daily')
+        let num_days_1 = document.getElementById('num_days')
+
+        function daily_fatalities(){
+
+          var fatalities_7 = parseFloat(fatalites.value);
+          var num_days = parseFloat(num_days_1.value);
+          var daily_fatalities = parseFloat(fatalities_7/num_days).toFixed(4);
+          // daily_fatalities_1.innerHTML = daily_fatalities;
+          document.getElementById('daily_fat').innerHTML=daily_fatalities;
+          document.getElementById('daily_fat2').innerHTML=daily_fatalities;
+          document.getElementById('daily_fat3').innerHTML=daily_fatalities;
+        }
+      daily_fatalities()
+
+    </script>
+
+    <script type="text/javascript">
+        let fraction_positive_comply_quarantine_1 = {{fraction_positive_comply_quarantine}};
+        let population_1 = {{population}};
+        let fraction_unknown_cases_1 = {{fraction_unknown_cases}};
+        let num_cases_3_weeks_1 = document.getElementById('num_cases_3_weeks');
+
+        function fraction_contagious(){
+
+          var fraction_positive_comply_quarantine = parseFloat(fraction_positive_comply_quarantine_1);
+          var population = parseFloat(population_1);
+          var fraction_unknown_cases = parseFloat(fraction_unknown_cases_1);
+          var num_cases_3_weeks = parseFloat(num_cases_3_weeks_1.value);
+
+          var ratio_unknown_known_1 = parseFloat(1);
+          var number_contagious_day_1 = parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_1)).toFixed(0);
+          var nfObject1 = new Intl.NumberFormat('en-US'); 
+          var  number_contagious_day_1_format = nfObject1.format(number_contagious_day_1); 
+          var fraction_contagious_day_1 = (parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_1)/parseFloat(population)).toFixed(4)*100).toFixed(4);
+
+          var ratio_unknown_known_2 = parseFloat(2);
+          var number_contagious_day_2 = parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_2)).toFixed(0);
+          var nfObject2 = new Intl.NumberFormat('en-US'); 
+          var  number_contagious_day_2_format = nfObject2.format(number_contagious_day_2);
+          var fraction_contagious_day_2 = (parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_2)/parseFloat(population)).toFixed(4)*100).toFixed(4);
+
+          var ratio_unknown_known_3 = parseFloat(3);
+          var number_contagious_day_3 = parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_3)).toFixed(0);
+          var nfObject3 = new Intl.NumberFormat('en-US'); 
+          var  number_contagious_day_3_format = nfObject3.format(number_contagious_day_3);
+          var fraction_contagious_day_3 = (parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_3)/parseFloat(population)).toFixed(4)*100).toFixed(4);
+
+          var ratio_unknown_known_4 = parseFloat(4);
+          var number_contagious_day_4 = parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_4)).toFixed(0);
+          var nfObject4 = new Intl.NumberFormat('en-US'); 
+          var  number_contagious_day_4_format = nfObject4.format(number_contagious_day_4);
+          var fraction_contagious_day_4 = (parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_4)/parseFloat(population)).toFixed(4)*100).toFixed(4);
+
+          var ratio_unknown_known_5 = parseFloat(5);
+          var number_contagious_day_5 = parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_5)).toFixed(0);
+          var nfObject5 = new Intl.NumberFormat('en-US'); 
+          var  number_contagious_day_5_format = nfObject5.format(number_contagious_day_5);
+          var fraction_contagious_day_5 = (parseFloat((num_cases_3_weeks)*((1-(fraction_positive_comply_quarantine))+ratio_unknown_known_5)/parseFloat(population)).toFixed(4)*100).toFixed(4);
+          // alert(fraction_contagious_day)
+          // var daily_fatalities = parseFloat(fatalities_7/31).toFixed(4);
+          // // daily_fatalities_1.innerHTML = daily_fatalities;
+          document.getElementById('number1').innerHTML=number_contagious_day_1;
+          document.getElementById('number2').innerHTML=number_contagious_day_2;
+          document.getElementById('number3').innerHTML=number_contagious_day_3;
+          document.getElementById('number4').innerHTML=number_contagious_day_4;
+          document.getElementById('number5').innerHTML=number_contagious_day_5;
+
+          document.getElementById('fraction5').innerHTML=fraction_contagious_day_5 + "%";
+          document.getElementById('fraction4').innerHTML=fraction_contagious_day_4+ "%";
+          document.getElementById('fraction3').innerHTML=fraction_contagious_day_3+ "%";
+          document.getElementById('fraction2').innerHTML=fraction_contagious_day_2+ "%";
+          document.getElementById('fraction1').innerHTML=fraction_contagious_day_1+ "%";
+
+          document.getElementById('fraction4_1').innerHTML=fraction_contagious_day_4+ "%";
+          document.getElementById('number4_1').innerHTML=number_contagious_day_4_format;
+          // document.getElementById('daily_fat2').innerHTML=daily_fatalities;
+        }
+      fraction_contagious()
+    </script>
+
+    <script type="text/javascript">
+        let num_kits1 = document.getElementById('num_kits');
+        let population1 = {{population}};
+
+        function testing_kits(){
+
+          var num_kits2 = parseFloat(num_kits1.value);
+          var testing_kits = Math.round(population1*num_kits2/1000);
+          // alert(population1)
+
+          // daily_fatalities_1.innerHTML = daily_fatalities;
+          document.getElementById('num_kits2').innerHTML=num_kits2;
+          document.getElementById('testing_kits').innerHTML=testing_kits;
+        }
+      testing_kits()
+
+    </script>
+
+    <script type="text/javascript">
+        let num_masks1 = document.getElementById('num_masks');
+        let population2 = {{population}};
+
+        function masks(){
+
+          var num_masks2 = parseFloat(num_masks1.value);
+          var masks_available = Math.round(population2*num_masks2/1000);
+
+          // daily_fatalities_1.innerHTML = daily_fatalities;
+          document.getElementById('num_masks2').innerHTML=num_masks2;
+          document.getElementById('masks_available').innerHTML=masks_available;
+        }
+      masks()
+
+    </script>
+
+  </div> <!-- /.container-->
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
